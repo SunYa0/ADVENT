@@ -107,6 +107,7 @@ def main():
     print('Model loaded')
 
     # DATALOADERS
+    # 源
     source_dataset = GTA5DataSet(root=cfg.DATA_DIRECTORY_SOURCE,
                                  list_path=cfg.DATA_LIST_SOURCE,
                                  set=cfg.TRAIN.SET_SOURCE,
@@ -120,6 +121,7 @@ def main():
                                     pin_memory=True,
                                     worker_init_fn=_init_fn)
 
+    #准备数据
     target_dataset = CityscapesDataSet(root=cfg.DATA_DIRECTORY_TARGET,
                                        list_path=cfg.DATA_LIST_TARGET,
                                        set=cfg.TRAIN.SET_TARGET,
@@ -137,7 +139,7 @@ def main():
     with open(osp.join(cfg.TRAIN.SNAPSHOT_DIR, 'train_cfg.yml'), 'w') as yaml_file:
         yaml.dump(cfg, yaml_file, default_flow_style=False)
 
-    # UDA TRAINING
+    # UDA TRAINING 训练
     train_domain_adaptation(model, source_loader, target_loader, cfg)
 
 
